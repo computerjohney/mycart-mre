@@ -1,0 +1,251 @@
+<script lang="ts">
+  import { onMount } from 'svelte'
+  import { DetailList, DrawerFooter, DrawerHeader, PageState } from '$lib/components'
+  import { costFormat, formatDate, paymentVariant, STRIPE_DASHBOARD_URL } from '$lib/utils'
+  import { formatCurrencyWithTruncation } from '$lib/utils/currency'
+  import { loadData } from '$lib/utils/apiHelpers'
+  import type { Cart, CartDetail } from '$lib/types/models'
+  import { paymentSettingsStore } from '$lib/stores/payment'
+  import { translate, locale } from '$lib/i18n'
+
+  // Reactive translation function
+  let t = $derived($translate)
+  let currentLocale = $derived($locale)
+  let paymentSettings = $derived($paymentSettingsStore)
+
+  interface DrawerCart {
+    cart: Cart
+  }
+
+  interface Props {
+    drawer: DrawerCart
+    onclose?: () => void
+  }
+
+  let { drawer, onclose }: Props = $props()
+
+  let cart = $state<CartDetail | null>(null)
+  let loading = $state(true)
+  let lastCartId = $state<string | null>(null)
+
+  async function loadCart() {
+    if (!drawer?.cart?.id) return
+
+    loading = true
+    const result = await loadData<CartDetail>(`/api/_/carts/${drawer.cart.id}`, t('carts.failedToLoadCart'))
+    if (result) {
+      cart = result
+      lastCartId = drawer.cart.id
+    }
+    loading = false
+  }
+
+  onMount(async () => {
+    await loadCart()
+  })
+
+  // Reload cart when drawer.cart.id changes
+  $effect(() => {
+    if (drawer?.cart?.id && drawer.cart.id !== lastCartId) {
+      loadCart()
+    }
+  })
+
+  function close() {
+    onclose?.()
+  }
+
+  // The state the badge beside the cart in the list carries, spelled as text
+  // instead. Both read the same mapping, so the two cannot disagree.
+  function getPaymentStatusColor(status: string) {
+    switch (paymentVariant(status)) {
+      case 'success':
+        return 'text-green-600'
+      case 'warning':
+        return 'text-yellow-600'
+      case 'danger':
+        return 'text-red-600'
+      default:
+        return 'text-gray-600'
+    }
+  }
+</script>
+
+<div>
+  <DrawerHeader title={t('carts.cartDetails')} />
+
+  {#if loading}
+    <PageState kind="loading" />
+  {:else if cart}
+    <div class="flow-root">
+      <dl class="-my-3 mt-2 divide-y divide-gray-100 text-sm">
+        <DetailList name={t('carts.cartId')}>{cart.id}</DetailList>
+
+        <DetailList name={t('carts.customerEmail')}>
+          {#if cart.email}
+            <a href="mailto:{cart.email}" class="a-link">{cart.email}</a>
+          {:else}
+            <span class="text-gray-400">-</span>
+          {/if}
+        </DetailList>
+
+        <DetailList name={t('carts.totalAmount')}>
+          {#if !cart.amount_total || cart.amount_total === 0}
+            <span class="font-bold text-green-600">{t('carts.free')}</span>
+          {:else if cart.payment_id && cart.payment_system === 'stripe'}
+            <a
+              href="{STRIPE_DASHBOARD_URL}/{cart.payment_id}"
+              target="_blank"
+              class="a-link"
+            >
+              {formatCurrencyWithTruncation(
+                cart.amount_total,
+                cart.currency || 'USD',
+                'admin',
+                paymentSettings?.truncation,
+                currentLocale,
+                paymentSettings?.number_format,
+                paymentSettings?.symbol_display?.admin
+              )}
+            </a>
+          {:else}
+            {formatCurrencyWithTruncation(
+              cart.amount_total,
+              cart.currency || 'USD',
+              'admin',
+              paymentSettings?.truncation,
+              currentLocale,
+              paymentSettings?.number_format,
+              paymentSettings?.symbol_display?.admin
+            )}
+          {/if}
+        </DetailList>
+
+        <DetailList name={t('carts.paymentStatus')}>
+          <span class={getPaymentStatusColor(cart.payment_status || '')}>
+            {cart.payment_status || '-'}
+          </span>
+        </DetailList>
+
+        <DetailList name={t('carts.paymentSystem')}>{cart.payment_system || '-'}</DetailList>
+
+        {#if cart.payment_id}
+          <DetailList name={t('carts.paymentId')}>
+            {#if cart.payment_system === 'stripe'}
+              <a
+                href="{STRIPE_DASHBOARD_URL}/{cart.payment_id}"
+                target="_blank"
+                class="a-link"
+              >
+                {cart.payment_id}
+              </a>
+            {:else}
+              {cart.payment_id}
+            {/if}
+          </DetailList>
+        {/if}
+
+        <DetailList name={t('common.created')}>{formatDate(cart.created)}</DetailList>
+
+        {#if cart.updated}
+          <DetailList name={t('common.updated')}>{formatDate(cart.updated)}</DetailList>
+        {/if}
+
+        {#if cart.items && cart.items.length > 0}
+          <DetailList name={t('carts.items')} grid={false} fullWidth={true}>
+            <div class="table-wrap">
+              <table class="table-plain">
+                <thead>
+                  <tr>
+                    <th>{t('carts.productName')}</th>
+                    <th>{t('carts.variantColumn')}</th>
+                    <th class="text-right">{t('carts.priceColumn')}</th>
+                    <th class="text-center">{t('carts.quantityColumn')}</th>
+                    <th class="text-right">{t('carts.subtotalColumn')}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {#each cart.items as item (item.id)}
+                    {@const unitPrice = item.amount + (item.variant_price_surcharge || 0)}
+                    {@const subtotal = unitPrice * item.quantity}
+                    <tr>
+                      <td class="whitespace-nowrap">
+                        <div class="font-medium text-gray-900">{item.name}</div>
+                        <div class="text-sm text-gray-500">{item.slug}</div>
+                      </td>
+                      <td>
+                        {#if item.variant_options && Object.keys(item.variant_options).length > 0}
+                          <div class="text-sm text-gray-700">
+                            {#each Object.entries(item.variant_options) as [key, value]}
+                              <div>{key}: {value}</div>
+                            {/each}
+                          </div>
+                        {:else}
+                          <span class="text-sm text-gray-400">-</span>
+                        {/if}
+                      </td>
+                      <td class="whitespace-nowrap text-right text-sm text-gray-700">
+                        {formatCurrencyWithTruncation(
+                          unitPrice,
+                          cart.currency || 'USD',
+                          'admin',
+                          paymentSettings?.truncation,
+                          currentLocale,
+                          paymentSettings?.number_format,
+                          paymentSettings?.symbol_display?.admin
+                        )}
+                      </td>
+                      <td class="whitespace-nowrap text-center text-sm text-gray-700">
+                        {item.quantity}
+                      </td>
+                      <td class="whitespace-nowrap text-right text-sm font-medium text-gray-900">
+                        {formatCurrencyWithTruncation(
+                          subtotal,
+                          cart.currency || 'USD',
+                          'admin',
+                          paymentSettings?.truncation,
+                          currentLocale,
+                          paymentSettings?.number_format,
+                          paymentSettings?.symbol_display?.admin
+                        )}
+                      </td>
+                    </tr>
+                  {/each}
+                </tbody>
+                <tfoot class="bg-gray-50">
+                  <tr>
+                    <td colspan="4" class="text-right font-bold text-gray-900">
+                      {t('carts.totalAmount')}
+                    </td>
+                    <td class="whitespace-nowrap text-right text-base font-bold text-gray-900">
+                      {formatCurrencyWithTruncation(
+                        cart.items.reduce((sum, item) => {
+                          const unitPrice = item.amount + (item.variant_price_surcharge || 0)
+                          return sum + (unitPrice * item.quantity)
+                        }, 0),
+                        cart.currency || 'USD',
+                        'admin',
+                        paymentSettings?.truncation,
+                        currentLocale,
+                        paymentSettings?.number_format,
+                        paymentSettings?.symbol_display?.admin
+                      )}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </DetailList>
+        {:else}
+          <DetailList name={t('carts.items')}>
+            <span class="text-gray-400">{t('carts.noItems')}</span>
+          </DetailList>
+        {/if}
+      </dl>
+    </div>
+  {:else}
+    <PageState kind="error" message={t('carts.failedToLoadCart')} />
+  {/if}
+
+  <DrawerFooter onclose={close} />
+</div>

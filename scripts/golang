@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+#set -e
+
+ROOT_PATH="$(git rev-parse --show-toplevel)"
+source ${ROOT_PATH}/scripts/_helper
+
+print_header "Install/Update Golang"
+
+get_latest_go_version() {
+  wget -qO- "https://golang.org/dl/" | grep -v -E 'go[0-9\.]+(beta|rc)' | grep -E -o 'go[0-9\.]+' | grep -E -o '[0-9]\.[0-9]+(\.[0-9]+)?' | sort -V | uniq | tail -1
+}
+
+case "$OS" in
+Darwin*)
+  brew install go
+  ;;
+Linux*)
+  support_arch
+  GO_RELEASE=$(get_latest_go_version)
+  GO_PATH="$HOME/go"
+
+  #rm -rf $GO_PATH
+  #mkdir -p $GO_PATH
+
+  if ! grep -q "export GOROOT=\"\$HOME/go\"" ~/.bashrc; then
+    echo -e "export GOROOT=\"\$HOME/go\"" >>~/.bashrc
+  fi
+
+  if ! grep -q "export GOPATH=\"\$HOME/go/packages\"" ~/.bashrc; then
+    echo -e "export GOPATH=\"\$HOME/go/packages\"" >>~/.bashrc
+  fi
+
+  if ! grep -q "export PATH=\$PATH:\$GOROOT/bin:\$GOPATH/bin" ~/.bashrc; then
+    echo -e "export PATH=\$PATH:\$GOROOT/bin:\$GOPATH/bin" >>~/.bashrc
+  fi
+
+  source ~/.bashrc
+
+  curl --silent https://dl.google.com/go/go${GO_RELEASE}.linux-amd64.tar.gz | tar -vxz --strip-components 1 -C ${GO_PATH} >/dev/null 2>&1
+  ;;
+*)
+  print_answer "ERROR" red
+  echo "Unsupported OS: $OS"
+  exit
+  ;;
+esac
+
+print_answer "SUCCESS" green

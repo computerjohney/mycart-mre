@@ -1,0 +1,51 @@
+{
+  "name": "mycart-site",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --bunx vite dev",
+    "build": "bun --bunx vite build",
+    "preview": "bun --bunx vite preview",
+    "check": "bun --bunx svelte-kit sync && bun --bunx svelte-check --tsconfig ./tsconfig.json",
+    "format": "prettier --write .",
+    "update": "bun update",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "test:browser": "vitest --config vitest.browser.config.ts",
+    "test:browser:ui": "vitest --config vitest.browser.config.ts --ui"
+  },
+  "dependencies": {
+    "@portone/browser-sdk": "^0.1.9",
+    "isomorphic-dompurify": "^3.22.0"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.70.3",
+    "@sveltejs/vite-plugin-svelte": "^7.3.0",
+    "@tailwindcss/forms": "0.5.11",
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/svelte": "^5.4.2",
+    "@testing-library/user-event": "^14.6.5",
+    "@types/node": "^26.2.0",
+    "@vitest/browser": "^4.1.11",
+    "@vitest/browser-webdriverio": "^4.1.11",
+    "@vitest/ui": "^4.1.11",
+    "autoprefixer": "^10.5.4",
+    "happy-dom": "^20.11.6",
+    "jsdom": "^30.0.1",
+    "prettier": "^3.9.6",
+    "prettier-plugin-svelte": "^4.1.1",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "svelte": "^5.56.10",
+    "svelte-check": "^4.7.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "~6",
+    "vite": "^8.2.2",
+    "vitest": "^4.1.11",
+    "webdriverio": "^9.31.2"
+  }
+}

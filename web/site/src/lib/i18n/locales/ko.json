@@ -1,0 +1,170 @@
+{
+  "common": {
+    "loading": "로딩 중...",
+    "poweredBy": "myCart 제공",
+    "backToHome": "홈으로 돌아가기"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "ko": "한국어",
+    "fr": "Français",
+    "es": "Español",
+    "de": "Deutsch",
+    "it": "Italiano",
+    "be": "Беларуская"
+  },
+  "header": {
+    "cart": "장바구니",
+    "language": "언어",
+    "account": "내 구매"
+  },
+  "footer": {
+    "follow": "팔로우:",
+    "allRightsReserved": "모든 권리 보유",
+    "poweredBy": "myCart 제공"
+  },
+  "home": {
+    "products": "상품",
+    "noProductsFound": "상품을 찾을 수 없습니다",
+    "loading": "로딩 중..."
+  },
+  "cart": {
+    "portone": "PortOne",
+    "portoneDescription": "간편결제 서비스",
+    "yourCart": "장바구니",
+    "inYourCart": "장바구니에 담긴 상품",
+    "cartIsEmpty": "장바구니가 비어있습니다",
+    "emptyMessage": "장바구니가 비어 있습니다. 쇼핑을 계속하려면 상품을 추가하세요.",
+    "goToHome": "홈으로 가기",
+    "itemsCount": "항목 ({{count}})",
+    "total": "합계",
+    "enterEmail": "이메일 입력",
+    "emailFreeDescription": "항목이 전송될 이메일 주소를 입력하세요.",
+    "emailPaidDescription": "결제 후 항목이 전송될 이메일 주소를 입력하세요. 또한 결제 시스템을 선택하세요.",
+    "emailPlaceholder": "EMAIL@EXAMPLE.COM",
+    "selectPaymentSystem": "결제 시스템 선택",
+    "stripe": "Stripe",
+    "stripeDescription": "카드 및 기타 결제 수단을 위한 인기 있는 결제 시스템",
+    "paypal": "PayPal",
+    "paypalDescription": "카드 및 PayPal 계정 자금을 위한 결제 시스템",
+    "spectrocoin": "Spectrocoin",
+    "spectrocoinDescription": "암호화폐 결제를 허용하는 결제 시스템",
+    "coinbase": "Coinbase Commerce",
+    "coinbaseDescription": "암호화폐 결제 시스템 (비트코인, 이더리움 등)",
+    "getForFree": "무료로 받기",
+    "checkout": "결제하기",
+    "noPaymentSystems": "사용 가능한 결제 시스템이 없습니다. 관리자에게 문의하세요.",
+    "selectPaymentError": "결제 시스템을 선택하세요",
+    "selectPaymentErrorPaid": "유료 항목에 대한 결제 시스템을 선택하세요",
+    "remove": "제거",
+    "removeItem": "항목 제거",
+    "validation_errors_title": "일부 항목에 주의가 필요합니다",
+    "out_of_stock": "이 상품은 더 이상 사용할 수 없습니다",
+    "please_remove": "계속하려면 제거하세요",
+    "price_updated": "가격이 업데이트되었습니다",
+    "review_cart": "장바구니 검토",
+    "quantity_unavailable": "요청한 수량을 사용할 수 없습니다"
+  },
+  "product": {
+    "addToCart": "장바구니에 추가",
+    "addToCartShort": "추가",
+    "add": "추가",
+    "removeFromCart": "장바구니에서 제거",
+    "removeFromCartShort": "제거",
+    "remove": "제거",
+    "free": "무료",
+    "new": "새로운",
+    "description": "설명",
+    "previousImage": "이전 이미지",
+    "nextImage": "다음 이미지",
+    "selectedVariant": "선택됨",
+    "inStock": "재고 있음",
+    "outOfStock": "품절",
+    "variantNotAvailable": "이 조합은 사용할 수 없습니다",
+    "selectOptions": "옵션 선택",
+    "details": "상세보기",
+    "quantity": "수량",
+    "download": "다운로드",
+    "downloadDelivery": "발송되는 실물은 없습니다. 결제가 완료되면 다운로드 링크를 이메일로 보내드립니다.",
+    "downloadInAccount": "계정에도 남아 있어 언제든 다시 내려받을 수 있습니다.",
+    "variant": "옵션",
+    "variants": "옵션"
+  },
+  "account": {
+    "signIn": "로그인",
+    "signUp": "회원가입",
+    "signOut": "로그아웃",
+    "signInTitle": "로그인",
+    "signInSubtitle": "로그인하면 구매한 항목을 모두 확인할 수 있습니다.",
+    "signUpTitle": "계정 만들기",
+    "signUpSubtitle": "계정을 만들면 구매한 항목이 한곳에 모입니다.",
+    "email": "이메일",
+    "emailPlaceholder": "EMAIL@EXAMPLE.COM",
+    "password": "비밀번호",
+    "passwordHint": "8자 이상",
+    "name": "이름 (선택)",
+    "namePlaceholder": "이름",
+    "noAccount": "아직 계정이 없으신가요?",
+    "haveAccount": "이미 계정이 있으신가요?",
+    "created": "계정이 만들어졌습니다. 로그인하면 주문이 표시됩니다.",
+    "signedInAs": "로그인 계정",
+    "emptyTitle": "구매 내역이 없습니다",
+    "emptyMessage": "구매한 항목이 여기에 표시되어 필요할 때 바로 사용할 수 있습니다.",
+    "goToShop": "상점으로",
+    "order": "주문",
+    "quantity": "수량",
+    "download": "다운로드",
+    "keys": "라이선스 키",
+    "copy": "복사",
+    "copied": "복사됨",
+    "failed": "구매 내역을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+    "unavailable": "이 사이트에서는 계정 기능을 사용할 수 없습니다.",
+    "invalidEmail": "올바른 이메일 주소를 입력해 주세요",
+    "shortPassword": "비밀번호는 8자 이상이어야 합니다",
+    "wrongCredentials": "이메일 또는 비밀번호가 올바르지 않습니다",
+    "emailTaken": "이미 등록된 이메일입니다",
+    "requestFailed": "문제가 발생했습니다. 다시 시도해 주세요."
+  },
+  "error": {
+    "notFound": "페이지를 찾을 수 없습니다",
+    "notFoundTitle": "찾을 수 없음",
+    "notFoundMessage": "찾으시는 페이지가 존재하지 않거나 이동되었습니다.",
+    "errorOccurred": "오류가 발생했습니다",
+    "checkUrl": "URL에 오타가 없는지 확인하거나 홈페이지로 돌아가 상품을 탐색하세요.",
+    "errorTitle": "오류",
+    "contactAdmin": "잠시 후 다시 시도하세요. 오류가 사라지지 않으면 관리자에게 문의하세요."
+  },
+  "payment": {
+    "success": {
+      "title": "결제 성공!",
+      "message": "구매해 주셔서 감사합니다. 주문이 성공적으로 처리되었습니다.",
+      "orderDetails": "주문 세부정보",
+      "quantity": "수량:",
+      "each": "각",
+      "redirecting": "몇 초 후 홈페이지로 리디렉션됩니다...",
+      "cartIdMissing": "장바구니 ID가 없습니다",
+      "loadFailed": "장바구니 정보를 불러오지 못했습니다"
+    },
+    "cancel": {
+      "title": "결제 취소됨",
+      "message": "결제가 취소되었습니다. 장바구니로 돌아가서 다시 시도할 수 있습니다.",
+      "returnToCart": "장바구니로 돌아가기"
+    },
+    "failed": "결제 실패"
+  },
+  "pagination": {
+    "previous": "이전",
+    "next": "다음"
+  },
+  "overlay": {
+    "close": "닫기"
+  },
+  "cookies": {
+    "title": "쿠키 동의",
+    "description": "저희는 귀하의 브라우징 경험을 향상시키고 사이트 트래픽을 분석하기 위해 쿠키를 사용합니다. '수락'을 클릭하시면 쿠키 사용에 동의하시는 것입니다. ",
+    "privacyLink": "개인정보 보호정책에서 자세히 알아보기",
+    "accept": "수락",
+    "reject": "거부"
+  }
+}

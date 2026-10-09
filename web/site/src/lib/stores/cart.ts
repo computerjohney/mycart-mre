@@ -1,0 +1,156 @@
+import { writable } from 'svelte/store'
+import type { CartItem } from '$lib/types/models'
+import { chargesStock } from '$lib/utils/digital'
+import { isBrowser, getLocalStorage, setLocalStorage } from '$lib/utils/browser'
+
+const CART_STORAGE_KEY = 'cart'
+
+/**
+ * The quantity a line may hold.
+ *
+ * An order holds one copy of a download: the shop stores a single file, so a
+ * second copy is the same file charged twice. Everything else is bounded only
+ * by the stock the shop keeps, which the server checks at checkout, not here.
+ */
+function orderableQuantity(item: CartItem, quantity: number): number {
+  return chargesStock(item) ? quantity : 1
+}
+
+function createCartStore() {
+  const loadFromStorage = (): CartItem[] => {
+    if (!isBrowser()) return []
+
+    try {
+      const stored = getLocalStorage(CART_STORAGE_KEY)
+      if (!stored) return []
+
+      const items = JSON.parse(stored)
+
+      // A cart written before a line carried a count holds one copy, counted
+      // rather than left to the arithmetic below. And the rule above is applied
+      // to what was stored, not only to what is added: a download put in a cart
+      // by an older version holds a count this one will not charge for, and the
+      // total under the list would be the buyer's wrong price rather than the
+      // shop's.
+      return items.map((item: any) => ({
+        ...item,
+        quantity: orderableQuantity(item, item.quantity || 1)
+      }))
+    } catch {
+      return []
+    }
+  }
+
+  const saveToStorage = (items: CartItem[]) => {
+    if (!isBrowser()) return
+
+    setLocalStorage(CART_STORAGE_KEY, JSON.stringify(items))
+  }
+
+  const { subscribe, set, update } = writable<CartItem[]>(loadFromStorage())
+
+  return {
+    subscribe,
+    set: (items: CartItem[]) => {
+      set(items)
+      saveToStorage(items)
+    },
+    add: (item: CartItem) => {
+      update((items) => {
+        // Check if this exact item (product + variant) already exists
+        const existing = items.find((i) => {
+          if (item.variant_id) {
+            return i.id === item.id && i.variant_id === item.variant_id
+          }
+          return i.id === item.id && !i.variant_id
+        })
+
+        if (existing) {
+          // Accumulate quantity instead of ignoring
+          const newItems = items.map(i =>
+            i === existing
+              ? { ...i, quantity: orderableQuantity(i, i.quantity + (item.quantity || 1)) }
+              : i
+          )
+          saveToStorage(newItems)
+          return newItems
+        }
+
+        const newItems = [...items, { ...item, quantity: orderableQuantity(item, item.quantity || 1) }]
+        saveToStorage(newItems)
+        return newItems
+      })
+    },
+    remove: (id: string) => {
+      update((items) => {
+        const newItems = items.filter((item) => item.id !== id)
+        saveToStorage(newItems)
+        return newItems
+      })
+    },
+    removeVariant: (productId: string, variantId: string) => {
+      update((items) => {
+        const newItems = items.filter((item) => !(item.id === productId && item.variant_id === variantId))
+        saveToStorage(newItems)
+        return newItems
+      })
+    },
+    updateQuantity: (productId: string, variantId: string | undefined, quantity: number) => {
+      update((items) => {
+        const newItems = items.map(item => {
+          const matches = variantId
+            ? (item.id === productId && item.variant_id === variantId)
+            : (item.id === productId && !item.variant_id)
+
+          if (matches) {
+            return { ...item, quantity: orderableQuantity(item, Math.max(1, quantity)) }
+          }
+          return item
+        })
+        saveToStorage(newItems)
+        return newItems
+      })
+    },
+    incrementQuantity: (productId: string, variantId: string | undefined) => {
+      update((items) => {
+        const newItems = items.map(item => {
+          const matches = variantId
+            ? (item.id === productId && item.variant_id === variantId)
+            : (item.id === productId && !item.variant_id)
+
+          if (matches) {
+            return { ...item, quantity: orderableQuantity(item, item.quantity + 1) }
+          }
+          return item
+        })
+        saveToStorage(newItems)
+        return newItems
+      })
+    },
+    decrementQuantity: (productId: string, variantId: string | undefined) => {
+      update((items) => {
+        const newItems = items.map(item => {
+          const matches = variantId
+            ? (item.id === productId && item.variant_id === variantId)
+            : (item.id === productId && !item.variant_id)
+
+          if (matches) {
+            return { ...item, quantity: orderableQuantity(item, Math.max(1, item.quantity - 1)) }
+          }
+          return item
+        })
+        saveToStorage(newItems)
+        return newItems
+      })
+    },
+    clear: () => {
+      set([])
+      saveToStorage([])
+    },
+    reload: () => {
+      set(loadFromStorage())
+    }
+  }
+}
+
+export const cartStore = createCartStore()

@@ -1,0 +1,170 @@
+{
+  "common": {
+    "loading": "WIRD GELADEN...",
+    "poweredBy": "Bereitgestellt von myCart",
+    "backToHome": "ZURÜCK ZUR STARTSEITE"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "ko": "한국어",
+    "fr": "Français",
+    "es": "Español",
+    "de": "Deutsch",
+    "it": "Italiano",
+    "be": "Беларуская"
+  },
+  "header": {
+    "cart": "WARENKORB",
+    "language": "Sprache",
+    "account": "MEINE KÄUFE"
+  },
+  "footer": {
+    "follow": "Folgen Sie uns:",
+    "allRightsReserved": "Alle Rechte vorbehalten",
+    "poweredBy": "Bereitgestellt von myCart"
+  },
+  "home": {
+    "products": "PRODUKTE",
+    "noProductsFound": "KEINE PRODUKTE GEFUNDEN",
+    "loading": "WIRD GELADEN..."
+  },
+  "cart": {
+    "yourCart": "IHR WARENKORB",
+    "inYourCart": "IN IHREM WARENKORB",
+    "cartIsEmpty": "DER WARENKORB IST LEER",
+    "emptyMessage": "Ihr Warenkorb ist leer. Fügen Sie Produkte hinzu, um weiter einzukaufen.",
+    "goToHome": "ZUR STARTSEITE",
+    "itemsCount": "ARTIKEL ({{count}})",
+    "total": "GESAMT",
+    "enterEmail": "E-MAIL EINGEBEN",
+    "emailFreeDescription": "Geben Sie die E-Mail-Adresse an, an die der Artikel gesendet wird.",
+    "emailPaidDescription": "Geben Sie die E-Mail-Adresse an, an die der Artikel nach der Zahlung gesendet wird. Wählen Sie außerdem das Zahlungssystem.",
+    "emailPlaceholder": "EMAIL@BEISPIEL.DE",
+    "selectPaymentSystem": "ZAHLUNGSSYSTEM WÄHLEN",
+    "stripe": "Stripe",
+    "stripeDescription": "Beliebtes Zahlungssystem für Karten und andere Methoden",
+    "paypal": "PayPal",
+    "paypalDescription": "Zahlungssystem für Karten und Guthaben im PayPal-Konto",
+    "portone": "PortOne",
+    "portoneDescription": "Kreditkarte, virtuelles Konto und mobile Zahlung",
+    "spectrocoin": "Spectrocoin",
+    "spectrocoinDescription": "Zahlungssystem, das Zahlungen mit Kryptowährung ermöglicht",
+    "coinbase": "Coinbase Commerce",
+    "coinbaseDescription": "Zahlungssystem für Zahlungen mit Kryptowährung (Bitcoin, Ethereum usw.)",
+    "getForFree": "KOSTENLOS ERHALTEN",
+    "checkout": "BEZAHLEN",
+    "noPaymentSystems": "KEINE ZAHLUNGSSYSTEME VERFÜGBAR. WENDEN SIE SICH AN DEN ADMINISTRATOR.",
+    "selectPaymentError": "Bitte wählen Sie ein Zahlungssystem",
+    "selectPaymentErrorPaid": "Bitte wählen Sie ein Zahlungssystem für kostenpflichtige Artikel",
+    "remove": "ENTFERNEN",
+    "removeItem": "Artikel entfernen",
+    "validation_errors_title": "Einige Artikel benötigen Ihre Aufmerksamkeit",
+    "out_of_stock": "Dieser Artikel ist nicht mehr verfügbar",
+    "please_remove": "Bitte entfernen Sie ihn, um fortzufahren",
+    "price_updated": "Der Preis wurde aktualisiert",
+    "review_cart": "Warenkorb prüfen",
+    "quantity_unavailable": "Angeforderte Menge nicht verfügbar"
+  },
+  "product": {
+    "addToCart": "IN DEN WARENKORB",
+    "addToCartShort": "HINZUFÜGEN",
+    "add": "HINZUFÜGEN",
+    "removeFromCart": "AUS DEM WARENKORB ENTFERNEN",
+    "removeFromCartShort": "ENTFERNEN",
+    "remove": "ENTFERNEN",
+    "free": "KOSTENLOS",
+    "new": "NEU",
+    "description": "BESCHREIBUNG",
+    "previousImage": "Vorheriges Bild",
+    "nextImage": "Nächstes Bild",
+    "selectedVariant": "AUSGEWÄHLT",
+    "inStock": "AUF LAGER",
+    "outOfStock": "NICHT AUF LAGER",
+    "variantNotAvailable": "DIESE KOMBINATION IST NICHT VERFÜGBAR",
+    "selectOptions": "OPTIONEN WÄHLEN",
+    "details": "DETAILS",
+    "quantity": "MENGE",
+    "download": "DOWNLOAD",
+    "downloadDelivery": "Es wird nichts verschickt. Den Download-Link bekommst du per E-Mail, sobald die Zahlung eingegangen ist.",
+    "downloadInAccount": "Der Download bleibt auch in deinem Konto, du kannst ihn jederzeit erneut herunterladen.",
+    "variant": "Variante",
+    "variants": "Varianten"
+  },
+  "account": {
+    "signIn": "ANMELDEN",
+    "signUp": "REGISTRIEREN",
+    "signOut": "ABMELDEN",
+    "signInTitle": "ANMELDEN",
+    "signInSubtitle": "Melde dich an, um auf alles zuzugreifen, was du gekauft hast.",
+    "signUpTitle": "KONTO ERSTELLEN",
+    "signUpSubtitle": "Ein Konto bündelt alles, was du kaufst.",
+    "email": "E-MAIL",
+    "emailPlaceholder": "EMAIL@EXAMPLE.COM",
+    "password": "PASSWORT",
+    "passwordHint": "MINDESTENS 8 ZEICHEN",
+    "name": "NAME (OPTIONAL)",
+    "namePlaceholder": "DEIN NAME",
+    "noAccount": "NOCH KEIN KONTO?",
+    "haveAccount": "SCHON EIN KONTO?",
+    "created": "KONTO ERSTELLT. MELDE DICH AN, DANN STEHT DEINE BESTELLUNG BEREIT.",
+    "signedInAs": "ANGEMELDET ALS",
+    "emptyTitle": "NOCH KEINE KÄUFE",
+    "emptyMessage": "Alles, was du kaufst, erscheint hier und steht bereit, wenn du es brauchst.",
+    "goToShop": "ZUM SHOP",
+    "order": "BESTELLUNG",
+    "quantity": "MENGE",
+    "download": "HERUNTERLADEN",
+    "keys": "DEINE SCHLÜSSEL",
+    "copy": "KOPIEREN",
+    "copied": "KOPIERT",
+    "failed": "DEINE KÄUFE KONNTEN NICHT GELADEN WERDEN. VERSUCHE ES SPÄTER ERNEUT.",
+    "unavailable": "DER KONTOBEREICH IST AUF DIESER SEITE NICHT VERFÜGBAR.",
+    "invalidEmail": "GIB EINE GÜLTIGE E-MAIL-ADRESSE EIN",
+    "shortPassword": "DAS PASSWORT MUSS MINDESTENS 8 ZEICHEN HABEN",
+    "wrongCredentials": "FALSCHE E-MAIL-ADRESSE ODER PASSWORT",
+    "emailTaken": "DIESE E-MAIL-ADRESSE IST BEREITS REGISTRIERT",
+    "requestFailed": "DA IST ETWAS SCHIEFGELAUFEN. VERSUCHE ES ERNEUT."
+  },
+  "error": {
+    "notFound": "Seite nicht gefunden",
+    "notFoundTitle": "NICHT GEFUNDEN",
+    "notFoundMessage": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "errorOccurred": "Ein Fehler ist aufgetreten",
+    "checkUrl": "Prüfen Sie die URL auf Tippfehler oder kehren Sie zur Startseite zurück, um unsere Produkte anzusehen.",
+    "errorTitle": "FEHLER",
+    "contactAdmin": "Versuchen Sie es in Kürze erneut; wenn der Fehler bleibt, wenden Sie sich an den Administrator."
+  },
+  "payment": {
+    "success": {
+      "title": "ZAHLUNG ERFOLGREICH!",
+      "message": "Vielen Dank für Ihren Einkauf. Ihre Bestellung wurde erfolgreich verarbeitet.",
+      "orderDetails": "BESTELLDETAILS",
+      "quantity": "Menge:",
+      "each": "je",
+      "redirecting": "Weiterleitung zur Startseite in wenigen Sekunden...",
+      "cartIdMissing": "Warenkorb-ID fehlt",
+      "loadFailed": "Warenkorbinformationen konnten nicht geladen werden"
+    },
+    "cancel": {
+      "title": "ZAHLUNG ABGEBROCHEN",
+      "message": "Ihre Zahlung wurde abgebrochen. Sie können zu Ihrem Warenkorb zurückkehren und es erneut versuchen.",
+      "returnToCart": "ZURÜCK ZUM WARENKORB"
+    },
+    "failed": "Zahlung fehlgeschlagen"
+  },
+  "pagination": {
+    "previous": "Zurück",
+    "next": "Weiter"
+  },
+  "overlay": {
+    "close": "SCHLIESSEN"
+  },
+  "cookies": {
+    "title": "COOKIE-EINWILLIGUNG",
+    "description": "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern und den Website-Verkehr zu analysieren. Mit Klick auf „Akzeptieren“ stimmen Sie der Verwendung von Cookies zu. ",
+    "privacyLink": "Mehr dazu in unserer Datenschutzerklärung",
+    "accept": "AKZEPTIEREN",
+    "reject": "ABLEHNEN"
+  }
+}

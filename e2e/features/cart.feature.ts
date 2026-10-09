@@ -1,0 +1,75 @@
+import { Page } from 'patchright'
+import { expect } from 'patchright/test'
+
+/**
+ * Feature Object for Shopping Cart Page (Storefront)
+ * Handles cart viewing and product removal
+ */
+export class CartFeature {
+  constructor(private page: Page) {}
+
+  async goto() {
+    await this.page.goto('/cart')
+  }
+
+  async waitForCart() {
+    // Either the cart has items or it is empty: both are settled pages.
+    const items = this.page.locator('[data-testid="cart-item"]')
+    const empty = this.page.getByText(/cart is empty/i)
+    await expect(items.or(empty).first()).toBeVisible({ timeout: 10000 })
+  }
+
+  async verifyPageLoaded() {
+    await expect(this.page).toHaveURL('/cart')
+    await this.waitForCart()
+  }
+
+  async getCartItemCount() {
+    const items = await this.page.locator('[data-testid="cart-item"]').count()
+    return items
+  }
+
+  async verifyCartIsEmpty() {
+    // Use getByRole to target only the h1 heading, not the paragraph text
+    const emptyMessage = this.page.getByRole('heading', { name: /cart is empty/i })
+    await expect(emptyMessage).toBeVisible()
+  }
+
+  async verifyCartHasItems(count: number) {
+    if (count === 0) {
+      // For empty cart, wait for empty message
+      await this.verifyCartIsEmpty()
+      return
+    }
+
+    // Wait for cart items to appear in the DOM (up to 10 seconds)
+    // This ensures the cart has loaded from localStorage and rendered
+    await expect(this.page.locator('[data-testid="cart-item"]').first()).toBeVisible({ timeout: 10000 })
+
+    // Now count the items
+    const items = await this.getCartItemCount()
+    expect(items).toBe(count)
+  }
+
+  async getItemNameByIndex(index: number) {
+    const item = this.page.locator('[data-testid="cart-item"]').nth(index)
+    const name = await item.locator('[data-testid="item-name"]').textContent()
+    return name?.trim() || ''
+  }
+
+  async removeItemByIndex(index: number) {
+    const item = this.page.locator('[data-testid="cart-item"]').nth(index)
+    const removeButton = item.locator('button:has-text("REMOVE"), button[aria-label*="remove" i]')
+    await removeButton.click()
+  }
+
+  async verifyItemRemoved(productName: string) {
+    const item = this.page.locator(`[data-testid="cart-item"]:has-text("${productName}")`)
+    await expect(item).not.toBeVisible()
+  }
+
+  async getTotalPrice() {
+    const total = await this.page.locator('[data-testid="cart-total"]').textContent()
+    return total?.trim() || ''
+  }
+}
