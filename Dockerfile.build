@@ -4,17 +4,42 @@ FROM node:22-alpine AS frontend-build
 WORKDIR /app
 
 # Copy frontend source
+#COPY web/admin ./web/admin
+#COPY web/site ./web/site
+
+# Build admin panel
+#WORKDIR /app/web/admin
+#RUN npm ci
+#RUN npx vite build
+
+# Build site
+#WORKDIR /app/web/site
+#RUN npm ci
+#RUN npx vite build
+
+# 1. Copy only package files first to cache dependency layers
+COPY web/admin/package*.json ./web/admin/
+COPY web/site/package*.json ./web/site/
+
+# 2. Install admin dependencies
+WORKDIR /app/web/admin
+RUN npm ci --legacy-peer-deps
+
+# 3. Install site dependencies
+WORKDIR /app/web/site
+RUN npm ci --legacy-peer-deps
+
+# 4. Copy the rest of the source code
+WORKDIR /app
 COPY web/admin ./web/admin
 COPY web/site ./web/site
 
-# Build admin panel
+# 5. Build admin panel
 WORKDIR /app/web/admin
-RUN npm ci
 RUN npx vite build
 
-# Build site
+# 6. Build site
 WORKDIR /app/web/site
-RUN npm ci
 RUN npx vite build
 
 # Stage 2: Build Go binary
