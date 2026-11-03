@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  go:
+    name: Go vet / test / build (${{ matrix.db }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        db: [sqlite, postgres]
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: mycart_test
+          TZ: Asia/Seoul
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      TEST_DB_DRIVER: ${{ matrix.db }}
+      TEST_POSTGRES_DSN: ${{ matrix.db == 'postgres' && 'postgres://postgres:test@localhost:5432/mycart_test?sslmode=disable' || '' }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-go@v7
+        with:
+          go-version: stable
+          cache: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Generate Swagger docs
+        run: |
+          go install github.com/swaggo/swag/cmd/swag@v1.16.6
+          $(go env GOPATH)/bin/swag init \
+            -g cmd/main.go \
+            --output docs/swagger \
+            --parseDependency \
+            --parseInternal
+
+      - name: Build frontends (embedded via go:embed)
+        run: |
+          for app in admin site; do
+            (cd web/$app && bun install --frozen-lockfile && bun run build)
+          done
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Test
+        run: go test ./... -count=1 -race
+
+      - name: Test (TZ=Asia/Seoul)
+        env:
+          TZ: Asia/Seoul
+        run: go test ./internal/... ./pkg/... -count=1
+
+      - name: Build
+        run: go build ./...
+
+  frontend:
+    name: Frontend build (${{ matrix.app }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [admin, site]
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        working-directory: web/${{ matrix.app }}
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        working-directory: web/${{ matrix.app }}
+        run: bun run build
+
+      - name: Type check (svelte-check)
+        working-directory: web/${{ matrix.app }}
+        run: bun run check
+        continue-on-error: true
