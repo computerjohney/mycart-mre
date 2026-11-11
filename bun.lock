@@ -19,7 +19,7 @@
         "vitepress-plugin-mark": "^0.12.0",
         "vitepress-plugin-mermaid": "^2.0.17",
         "vitepress-plugin-pdf": "^0.12.0",
-        "vitepress-plugin-plantuml": "^0.12.0",
+        "vitepress-plugin-plantuml": "^0.12.2",
         "vitepress-plugin-qrcode": "^0.12.0",
         "vitepress-plugin-steps": "^0.12.0",
         "vitepress-plugin-tabs": "^0.9.1",
@@ -884,6 +884,12 @@
 
     "vitepress-plugin-video/@vueuse/core": ["@vueuse/core@14.4.0", "", { "dependencies": { "@types/web-bluetooth": "^0.0.21", "@vueuse/metadata": "14.4.0", "@vueuse/shared": "14.4.0" }, "peerDependencies": { "vue": "^3.5.0" } }, "sha512-X4WHz1HlCzCBoYXesUkifzzWBAcZgXG8Fi5iNPQg/epdzOB3gu8Fawj3hvuwYR1nGcXGnvxwYYcUC/71++svtQ=="],
 
+    "vitepress-plugin-plantuml/@pengzhanbo/utils": ["@pengzhanbo/utils@3.12.0", "", {}, "sha512-7FO3v0z0FcAmWbVaG0UTd0nrKAtR+FdJ3Uoa7CGAO790Y9bsTyoDGn/FHhFZq5bNRWaq9FiwyA7SiKD4fdwm9Q=="],
+
+    "vitepress-plugin-plantuml/vitepress-plugin-toolkit": ["vitepress-plugin-toolkit@0.12.2", "", { "dependencies": { "@pengzhanbo/utils": "^3.11.0", "@vueuse/core": "^14.4.0", "ansis": "^4.3.1", "markdown-it-container": "^4.0.0", "picomatch": "^4.0.7" }, "peerDependencies": { "vitepress": "^2.0.0-alpha.18", "vue": "^3.5.0" } }, "sha512-BW45EdzzPUtur+eF9Z6AkW3JTov773vNh4kDR0mvvNXEBz8FRySgFtU6SVWLXoAlbqd7SjbWC707z5T5D4esxQ=="],
+
+    "vitepress-plugin-plantuml/vitepress-tuck": ["vitepress-tuck@0.12.2", "", { "dependencies": { "@pengzhanbo/utils": "^3.11.0", "unplugin-vue-components": "^32.1.0" }, "peerDependencies": { "vitepress": "^2.0.0-alpha.18" } }, "sha512-r9nmTzCAkZGa+IWbd2cCWQ4RtdDPzIm+gwAD777E5Ge7a3dpLouDdbOBVIs/7gYlauyNYCg3nZF4HHvgueg9kw=="],
+
     "csso/css-tree/mdn-data": ["mdn-data@2.0.28", "", {}, "sha512-aylIc7Z9y4yzHYAJNuESG3hfhC+0Ibp/MAMiaOZgNv4pmEdFyfZhhhny4MNiAfWdBQ1RQ2mfDWmM1x8SvGyp8g=="],
 
     "cytoscape-fcose/cose-base/layout-base": ["layout-base@2.0.1", "", {}, "sha512-dp3s92+uNI1hWIpPGH3jK2kxE2lMjdXdr+DH8ynZHpd6PUlH6x6cbuXnoMmiNumznqaNO31xu9e79F0uuZ0JFg=="],
@@ -921,6 +927,8 @@
     "vitepress-plugin-video/@vueuse/core/@vueuse/metadata": ["@vueuse/metadata@14.4.0", "", {}, "sha512-swx/255R6JyHZFJhx845iz5CRWDZdCfvkZOpACWc5+c5WHcG24mv8gUT1WIdFQaHt6dq79rvILd9QnCWiyVm9g=="],
 
     "vitepress-plugin-video/@vueuse/core/@vueuse/shared": ["@vueuse/shared@14.4.0", "", { "peerDependencies": { "vue": "^3.5.0" } }, "sha512-JRgY90Sz8DDtPMsaDflvPMp9xYk69JZAmbuDvAquUVXKr2gEjqtzGNTTthLfckH0BzBqvnu31gb4a8TGLRe79g=="],
+
+    "vitepress-plugin-plantuml/vitepress-plugin-toolkit/picomatch": ["picomatch@4.0.7", "", {}, "sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA=="],
 
     "qrcode/yargs/cliui/wrap-ansi": ["wrap-ansi@6.2.0", "", { "dependencies": { "ansi-styles": "^4.0.0", "string-width": "^4.1.0", "strip-ansi": "^6.0.0" } }, "sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA=="],
   }
